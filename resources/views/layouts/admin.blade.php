@@ -204,7 +204,6 @@
 
         @yield('content')
 
-
     </div>
 
 </main>
