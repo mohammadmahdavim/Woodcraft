@@ -30,7 +30,7 @@ class ProductController extends Controller
                 $query->where('title', 'like', '%' . $request->name . '%');
             })
             ->when($request->get('code'), function ($query) use ($request) {
-                $query->where('code', $request->code );
+                $query->where('code', $request->code);
             })
             ->orderBy('created_at', 'desc')->get();
         $materials = Material::all();
@@ -52,6 +52,7 @@ class ProductController extends Controller
             'body' => $request->body,
             'price' => $request->price,
             'code' => $request->code,
+            'sode' => $request->sode,
             'author' => auth()->user()->id,
 
         ]);
@@ -77,6 +78,7 @@ class ProductController extends Controller
             'body' => $request->body,
             'price' => $request->price,
             'code' => $request->code,
+            'sode' => $request->sode,
 
         ]);
         $this->fileController->getUploadImage($request, $row, 'product');
@@ -104,7 +106,9 @@ class ProductController extends Controller
             'material_id' => $request->material_id,
             'count' => $request->count,
         ]);
+
         alert()->success('محصول با موفقت ویرایش شد.', 'عملیات موفق');
+        $this->price($id);
 
         return back();
     }
@@ -113,6 +117,27 @@ class ProductController extends Controller
     {
         $row = ProductMaterial::where('id', $id)->first();
         $row->delete();
+        $this->price($row->product_id);
+    }
+
+    public function price($id)
+    {
+        $row = Product::where('id', $id)->first();
+        $price = 0;
+        foreach ($row->materials as $material) {
+            $mat = Material::where('id', $material->material_id)->first();
+            if ($mat->price)
+            {
+                $price = $price + ($material->count * $mat->price);
+
+            }
+
+        }
+        $sode = $row->sode;
+        if (!$sode) {
+            $sode = 0;
+        }
+        $row->update(['price' => $price * (1 + $sode)]);
     }
 
 }

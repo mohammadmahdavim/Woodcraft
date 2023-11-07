@@ -16,4 +16,9 @@ class ProductMaterial extends Model
     {
         return $this->belongsTo(Material::class)->withDefault();;
     }
+
+    public function product()
+    {
+        return $this->belongsTo(Product::class)->withDefault();;
+    }
 }

@@ -11,6 +11,46 @@
             });
         });
     </script>
+    <script src="/js/num2persian-min.js"></script>
+    <script src="/js/number-divider.min.js"></script>
+    <script>
+
+        $(document).on('focus', '.price-box-product input', function () {
+            var boxPrice = $(this).siblings('.price-box-product-content');
+            boxPrice.fadeIn(100);
+            boxPrice.find('.price-box-numbers').html($(this).val())
+            boxPrice.find('.price-box-numbers').divide({
+                delimiter: ',',
+                divideThousand: false
+            });
+            var e = this;
+            this.nextSibling.nextElementSibling.children[3].childNodes[1].nextElementSibling.innerHTML = e.value
+                .toPersianLetter()
+            e.oninput = myHandler;
+            e.onpropertychange = e.oninput; // for IE8
+            function myHandler() {
+                this.nextSibling.nextElementSibling.children[3].childNodes[1].nextElementSibling.innerHTML = e.value
+                    .toPersianLetter();
+            }
+        });
+
+        $(document).on('click', '.price-box-product-content button.close', function () {
+            $(this).parents('.price-box-product-content').fadeOut(100);
+        })
+
+        $(document).on('blur', '.price-box-product input', function () {
+            $(this).siblings('.price-box-product-content').fadeOut(100);
+        });
+
+        $(document).on('keyup', '.price-box-product input', function () {
+            var boxPrice = $(this).siblings('.price-box-product-content');
+            boxPrice.find('.price-box-numbers').html($(this).val());
+            boxPrice.find('.price-box-numbers').divide({
+                delimiter: ',',
+                divideThousand: false
+            });
+        });
+    </script>
 @endsection('script')
 @section('navbar')
 
@@ -81,6 +121,35 @@
                                             @endforeach
                                         </select>
                                     </div>
+                                    <div class="col-md-3">
+                                    <div class="price-box-product">
+                                        <span> قیمت</span>
+                                        <input name="price" class="form-control" id="price" required autocomplete="off">
+                                        <div class="price-box-product-content">
+                                            <div
+                                                class="price-box-header-product d-flex justify-content-between align-items-center">
+                                                <span>وضعیت مبلغ شما</span>
+                                                <button class="close"><i
+                                                        class="ion-android-close"></i></button>
+                                            </div>
+                                            <div class="d-flex align-items-center">
+                                                <span class="text-secondary ml-2">به عدد:</span>
+                                                <span class="price-box-numbers ml-2">
+                                                                        </span>
+                                                <span class="text-dark">ریال</span>
+                                            </div>
+
+                                            <hr>
+                                            <div class="d-flex align-items-center">
+                                                                        <span class="text-secondary ml-2">به
+                                                                            حروف:</span>
+                                                <span class="price-box-letters ml-2">
+                                                                        </span>
+                                                <span class="text-dark">ریال</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    </div>
                                 </div>
 
 
@@ -144,7 +213,9 @@
                         <th>عنوان</th>
                         <th>واحد</th>
                         <th>دسته</th>
+                        <th>قیمت</th>
                         <th>موجودی</th>
+
                         <th>عملیات</th>
                     </tr>
                     </thead>
@@ -156,6 +227,7 @@
                             <td style="text-align: center">{{$row->name}}</td>
                             <td style="text-align: center">{{$row->unit->name}}</td>
                             <td style="text-align: center">{{$row->type->name}}</td>
+                            <td style="text-align: center">{{number_format($row->price)}}</td>
                             <td style="text-align: center">{{$row->remaining}}</td>
                             <td style="text-align: center">
                                 <button type="button" class="btn btn-info" data-toggle="modal"
@@ -249,6 +321,35 @@
                                                                             @endif value="{{$type->id}}">{{$type->name}}</option>
                                                                 @endforeach
                                                             </select>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="price-box-product">
+                                                                <span> قیمت</span>
+                                                                <input name="price" class="form-control" id="price" required autocomplete="off" value="{{$row->price}}">
+                                                                <div class="price-box-product-content">
+                                                                    <div
+                                                                        class="price-box-header-product d-flex justify-content-between align-items-center">
+                                                                        <span>وضعیت مبلغ شما</span>
+                                                                        <button class="close"><i
+                                                                                class="ion-android-close"></i></button>
+                                                                    </div>
+                                                                    <div class="d-flex align-items-center">
+                                                                        <span class="text-secondary ml-2">به عدد:</span>
+                                                                        <span class="price-box-numbers ml-2">
+                                                                        </span>
+                                                                        <span class="text-dark">ریال</span>
+                                                                    </div>
+
+                                                                    <hr>
+                                                                    <div class="d-flex align-items-center">
+                                                                        <span class="text-secondary ml-2">به
+                                                                            حروف:</span>
+                                                                        <span class="price-box-letters ml-2">
+                                                                        </span>
+                                                                        <span class="text-dark">ریال</span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </div>
 

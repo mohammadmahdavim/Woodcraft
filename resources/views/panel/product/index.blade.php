@@ -67,7 +67,7 @@
                                         <label>نام</label>
                                         <input class="form-control" name="title" required>
                                     </div>
-                                    <div class="col-md-3">
+                                    <div class="col-md-3" style="display: none">
                                         <label>قیمت</label>
                                         <input class="form-control" name="price" type="number" required>
                                     </div>
@@ -76,12 +76,14 @@
                                         <input class="form-control" name="code" type="text" required>
                                     </div>
                                     <div class="col-md-3">
+                                        <label>سود</label>
+                                        <input class="form-control" name="sode" type="text" >
+                                    </div>
+                                    <div class="col-md-3">
                                         <label>تصویر</label>
                                         <input class="form-control" name="image" type="file">
                                     </div>
                                 </div>
-
-
                             </div>
                             <div class="modal-footer">
                                 <button type="submit" class="btn btn-primary btn-block">ذخیره</button>
@@ -209,7 +211,7 @@
                                                                 <td>{{$material->count}}</td>
                                                                 <td>
                                                                     <button class="btn  btn-danger" type="button"
-                                                                            onclick="deleteMaterialData({{$row->id}})">
+                                                                            onclick="deleteMaterialData({{$material->id}})">
                                                                         <i
                                                                             class="fa fa-trash"></i></button>
                                                                 </td>
@@ -255,7 +257,7 @@
                                                                 <input class="form-control" name="title" required
                                                                        value="{{$row->title}}">
                                                             </div>
-                                                            <div class="col-md-3">
+                                                            <div class="col-md-3" style="display: none">
                                                                 <label>قیمت</label>
                                                                 <input class="form-control" name="price" type="number"
                                                                        required value="{{$row->price}}">
@@ -267,6 +269,10 @@
                                                             <div class="col-md-3">
                                                                 <label>تصویر</label>
                                                                 <input class="form-control" name="image" type="file">
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <label>سود</label>
+                                                                <input class="form-control" name="sode" type="text" value="{{$row->sode}}">
                                                             </div>
                                                         </div>
                                                     </div>

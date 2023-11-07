@@ -135,8 +135,10 @@ class OrderController extends Controller
     public function details_store(Request $request)
     {
         $box = $request->all();
+
         $myValue = array();
         parse_str($box['form'], $myValue);
+
         $orderProduct = OrderProduct::create([
             'order_id' => $myValue['order_id'],
             'product_id' => $myValue['product_id'],
@@ -170,6 +172,29 @@ class OrderController extends Controller
 
         $items = OrderProduct::where('order_id', $myValue['order_id'])->get();
         return view('panel.order.product_render', compact('items'));
+    }
+
+    public function change_price(Request $request)
+    {
+        $box = $request->all();
+
+        $myValue = array();
+        parse_str($box['form'], $myValue);
+
+        $price = 0;
+
+        foreach ($myValue['product'] as $key => $product) {
+            $row = ProductMaterial::where('id', $key)->first();
+            $mat = Material::where('id', $product)->first();
+            $price = $price + ($row->count * ($mat->price));
+
+        }
+        $sode = $row->product->sode;
+        if (!$sode) {
+            $sode = 0;
+        }
+        return $price * (1 + $sode);
+
     }
 
     public function materials_store(Request $request)

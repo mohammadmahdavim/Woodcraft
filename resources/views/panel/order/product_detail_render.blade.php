@@ -13,7 +13,7 @@
     @foreach($items as $item)
         <tr>
             <td style="text-align: center">
-                <select class="js-example-basic-single" name="product[{{$item->id}}]" id="product{{$item->id}}"
+                <select class="js-example-basic-single" name="product[{{$item->id}}]" id="product{{$item->id}}" onchange="changeprice()"
                 >
                     @foreach($materials as $material)
                         <option

@@ -13,7 +13,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/', function () {
         return view('panel.dashboard.index');
@@ -40,6 +39,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::any('orders/delete/{id}', [\App\Http\Controllers\OrderController::class, 'destroy']);
     Route::get('orders/details/{id}', [\App\Http\Controllers\OrderController::class,'details']);
     Route::post('/orders/details/store', [\App\Http\Controllers\OrderController::class,'details_store']);
+    Route::post('/orders/details/change_price', [\App\Http\Controllers\OrderController::class,'change_price']);
     Route::post('/orders/materials/store', [\App\Http\Controllers\OrderController::class,'materials_store']);
     Route::any('/orders/material/delete/{id}', [\App\Http\Controllers\OrderController::class,'materials_delete']);
     Route::any('/orders/details/delete/{id}', [\App\Http\Controllers\OrderController::class,'details_delete']);

@@ -60,6 +60,7 @@ class MaterialController extends Controller
             'name' => $request->name,
             'unit_id' => $request->unit_id,
             'type_id' => $request->type_id,
+            'price' => $request->price,
         ]);
 //        $this->fileController->getUploadImage($request, $row, 'product');
         alert()->success('متریال جدید با موفقیت افزوده شد', 'عملیات موفق');
@@ -82,6 +83,7 @@ class MaterialController extends Controller
             'name' => $request->name,
             'unit_id' => $request->unit_id,
             'type_id' => $request->type_id,
+            'price' => $request->price,
         ]);
 //        $this->fileController->getUploadImage($request, $row, 'product');
         alert()->success('متریال با موفقیت ویرایش گردید.', 'عملیات موفق');

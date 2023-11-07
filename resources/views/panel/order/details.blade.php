@@ -347,6 +347,34 @@
             }
         });
     }
+    function changeprice() {
+        var form=$("#formProduct").serialize();
+        var product_id = $("#product_id option:selected").val();
+        var order_id = $("#order_id").val();
+        var price = $("#price").val();
+        var discount = $("#discount").val();
+        if (!$.trim(price)) {
+            alert('قیمت را وارد کنید.')
+            return 'قیمت را وارد کنید.';
+        }
+        if (!$.trim(discount)) {
+            discount = 0;
+        }
+        $('#render').html('');
+
+        $.ajax({
+            type: "POST",
+            url: '/orders/details/change_price',
+            data: {
+                "_token": "{{ csrf_token() }}",
+                form: form,
+            },
+            success: function (data) {
+
+               document.getElementById('price').value=data
+            }
+        });
+    }
 
     function materialFormsubmit() {
 
